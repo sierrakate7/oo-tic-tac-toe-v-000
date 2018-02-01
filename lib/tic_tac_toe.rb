@@ -71,7 +71,7 @@ def turn
 end
 
 
-def self.play
+def play
   until over?
     puts "Your Turn"
     turn
