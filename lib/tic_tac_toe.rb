@@ -69,7 +69,7 @@ def turn
   end
 end
   
-def play
+def self.play
   turns = 9 
   counter = 0 
   loop do
