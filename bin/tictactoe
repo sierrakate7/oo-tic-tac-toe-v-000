@@ -7,6 +7,6 @@ require_relative '../lib/tic_tac_toe.rb'
 
 puts "Welcome to Tic Tac Toe!"
 
-display_board
+display
 TicTacToe.new.play
 
