@@ -35,10 +35,11 @@ def input_to_index(user_input)
 end
 
 def move(position, char = "X")
+   @board[position] = char
 end
 
 def position_taken?(position)
-  [position] != " " && [position] != ""
+  @board[position] != " " && @board[position] != ""
 end
 
 def valid_move?(index)
@@ -50,9 +51,9 @@ def won?
     index_1 = win_combo[0]
     index_2 = win_combo[1]
     index_3 = win_combo[2]
-    position_1 = board[index_1]
-    position_2 = board[index_2]
-    position_3 = board[index_3]
+    position_1 = @board[index_1]
+    position_2 = @board[index_2]
+    position_3 = @board[index_3]
     position_1 == position_2 && position_2 == position_3 && position_1 != " "
   end 
 end
@@ -68,23 +69,26 @@ def turn
     turn
   end
 end
-  
-def self.play
-  turns = 9 
-  counter = 0 
-  loop do
-    counter = counter + 1 
+
+
+def play
+  until over?
+    puts "Your Turn"
     turn
-    if counter == turns
-      break
-      puts "Game Over"
+  end
+  if won?
+    puts "Congratulations #{winner}!"
+  elsif draw?
+    puts "Cat's Game!"
+  else
+    return nil
   end
 end
-end
+
 
 def turn_count
   counter = 0
-  board.each do |token| 
+  @board.each do |token| 
     if token == "X" || token == "O"
       counter += 1 
     end
@@ -101,10 +105,26 @@ def current_player
 end
 
 def position_taken?(index)
-  !([index].nil? || [index] == " ")
+!(@board[index].nil? || @board[index] == " ")
  end
  
+ def full?
+  !@board.any? { |x| x == " " }
+ end
 
+def draw?
+   full? && !won?
+end
+
+def over?
+  won? || draw?
+end  
+
+def winner
+  if winning_combo = won?
+    @board[winning_combo[0]]
+  end
+end
 
 
 end
